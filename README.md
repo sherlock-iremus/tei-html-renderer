@@ -20,3 +20,5 @@ export default App
 - Do your modifications
 - pnpm link --global
 - (in your test project) `pnpm link --global tei-html-renderer`
+
+https://www.npmjs.com/package/tei-html-renderer
