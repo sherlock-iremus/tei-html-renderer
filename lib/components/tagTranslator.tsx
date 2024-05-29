@@ -12,9 +12,9 @@ import VerseSpace from "./transcriptions/VerseSpace";
 import Note from "./transcriptions/Note";
 import Ref from "./transcriptions/Ref";
 import Image from "./transcriptions/Image";
-import { TEIItem } from "../TEIHTMLRenderer"
+import { TEIParentItem } from "../TEIHTMLRenderer"
 
-function computeNode(node: TEIItem, setNote: any) {
+function computeNode(node: TEIParentItem, setNote: any) {
     //TODO: on ne devrait pas avoir à faire cette condition puisque tous les objets reçus ici ont un attribut children
     if (node.children) {
         return <Fragment>
@@ -29,7 +29,7 @@ function computeNode(node: TEIItem, setNote: any) {
     }
 }
 
-export function tagTranslate(tag: any, node: TEIItem, setNote: any) {
+export function tagTranslate(tag: any, node: TEIParentItem, setNote: any) {
     const computedNode = computeNode(node, setNote);
     switch (tag) {
         case "p":

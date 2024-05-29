@@ -3,14 +3,21 @@ import { css } from "@emotion/react";*/
 import { useEffect, useState } from "react";
 import TEINode from "./components/TEINode";
 import Box from "@mui/material/Box";
+import { xmlToJson } from "./utils";
 
-export interface TEIItem {
+export interface TEIParentItem {
   id: any,
-  item: any,
-  setNote: any,
+  tag: any,
   attributes: any,
-  children: TEIItem[]
+  children: TEIItem[],
 }
+
+export interface TEILastItem {
+  id: any,
+  text: any
+}
+
+export type TEIItem = TEILastItem | TEIParentItem;
 
 interface TEIHTMLRendererProps {
   TEIDocumentURL: string,
@@ -22,12 +29,11 @@ export const TEIHTMLRenderer: React.FC<TEIHTMLRendererProps> = ({ TEIDocumentURL
 
   useEffect(() => {
     fetch(TEIDocumentURL).then((response) =>
-      response.json().then((articleJSON) => {
-        console.log("Article JSONified :", articleJSON)
-        setTEIRoot(
-          [articleJSON],
-        );
-      }).catch(e => console.warn("Error during JSONification :", e))
+      response.text().then((articleXML) => {
+        const TEI = xmlToJson(articleXML)
+        console.log("Article JSONified :", TEI)
+        setTEIRoot([TEI])
+      }).catch(e => console.warn("Error during XML JSONification :", e))
     ).catch(e => console.warn("Error during TEIDocumentURL fetching (", TEIDocumentURL, ')', e));
   }, [TEIDocumentURL, setNote]);
 
